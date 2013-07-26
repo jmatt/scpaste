@@ -1,6 +1,6 @@
 ;;; scpaste.el --- Paste to the web via scp.
 
-;; Copyright (C) 2008 Phil Hagelberg
+;; Copyright (C) 2008-2013 Phil Hagelberg
 
 ;; Author: Phil Hagelberg
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/SCPaste
@@ -146,8 +146,9 @@ You must have write-access to this directory via `scp'.")
   "Generate an index of all existing pastes on server on the splash page."
   (interactive)
   (let* ((dest-parts (split-string scpaste-scp-destination ":"))
-         (files (shell-command-to-string (concat "ssh " (car dest-parts)
-                                                 " ls " (cadr dest-parts))))
+         (files (shell-command-to-string (concat "ssh -p " scpaste-scp-port
+                                                 " " (car dest-parts)
+                                                 " ls -1 " (cadr dest-parts))))
          (file-list (split-string files "\n")))
     (save-excursion
       (with-temp-buffer
