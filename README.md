@@ -12,7 +12,7 @@ individual language support must be added one-by-one.
 
 ## Installation
 
-Install via [Marmalade](http://marmalade-repo.org) or from source via
+Install via [Marmalade](https://marmalade-repo.org) or from source via
 <tt>M-x package-install-from-buffer</tt>.
 
 You'll need to configure your destination:
@@ -23,6 +23,15 @@ You'll need to configure your destination:
 `scpaste-scp-destination` should be an `scp`-accessible directory that
 is also served over HTTP. `scpaste-http-destination` should be the URL
 that corresponds to that directory.
+
+If you have a different keyfile, you can set that, too:
+
+    (setq scpaste-scp-pubkey "~/.ssh/my_keyfile.pub")
+
+Optionally you can set the displayed name and where it should link to:
+
+    (setq scpaste-user-name "Technomancy"
+          scpaste-user-address "http://technomancy.us/")
 
 You probably want to set up SSH keys for your destination to avoid
 having to enter your password once for each paste. Also be sure the
