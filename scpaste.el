@@ -155,13 +155,17 @@ Example: \"~/.ssh/id.pub\"")
            (invocation (concat "scp -q " identity " " port))
            (command-1 (concat invocation
                               " " tmp-file
-                              " " scp-destination)))
+                              " " scp-destination))
+      	   (command-2 (concat invocation
+                              " " (buffer-file-name (current-buffer))
+                              " " scp-original-destination)))
       (with-temp-message (format "Executing %s" command-1)
         (let* ((error-buffer "*scp-error*")
                (retval (shell-command command-1 nil error-buffer))
+	       (retval-2 (shell-command command-2 nil error-buffer))
                (x-select-enable-primary t))
           ;; Notify user and put the URL on the kill ring
-          (if (= retval 0)
+          (if (and (= retval 0) (= retval-2 0))
               (progn (kill-new full-url)
                      (message "Pasted to %s (on kill ring)" full-url))
             (progn
